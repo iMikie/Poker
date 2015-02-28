@@ -99,7 +99,7 @@ describe Hand do
     end
 
     it 'not a straight flush' do
-      expect(straight_flush?(four_of_a_kind)).to be_falsey
+      expect(four_of_a_kind.straight_flush?).to be_falsey
     end
   end
   #
