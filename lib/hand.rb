@@ -1,7 +1,9 @@
-require_relative 'hand_type_classes'
-require 'card'
+require_relative 'hand_type_classes.rb'
+require_relative 'card'
 
 class Hand
+  include HandTypes
+
   HAND_RANKS = {
     four_of_a_kind:  8,
     full_house:      7,
@@ -26,7 +28,7 @@ class Hand
     jack:  11,
     queen: 12,
     king:  13,
-    ace:   14,
+    ace:   14
   }
 
   attr_reader :cards

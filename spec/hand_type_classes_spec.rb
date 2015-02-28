@@ -1,7 +1,7 @@
 require 'rspec'
 require 'hand'
 
-describe 'Hand Type Classes' do
+describe Hand do
   let(:straight_flush) do
     Hand.get_cards([
       [:three, :hearts],
@@ -92,111 +92,94 @@ describe 'Hand Type Classes' do
     ])
   end
 
-  describe StraightFlush do
-    describe '#recognizes?' do
-      it 'a straight flush' do
-        expect(StraightFlush.recognizes?(straight_flush)).to be_truthy
-      end
+  describe '#straight_flush?' do
+    it 'a straight flush' do
+      expect(straight_flush.straight_flush?).to be_truthy
+      # expect(straight_flush.straight_flush?).to be_truthy
+    end
 
-      it 'not a straight flush' do
-        expect(StraightFlush.recognizes?(four_of_a_kind)).to be_falsey
-      end
+    it 'not a straight flush' do
+      expect(straight_flush?(four_of_a_kind)).to be_falsey
     end
   end
-
-  describe FourOfAKind do
-    describe '#recognizes' do
-      it 'four of a kind' do
-        expect(FourOfAKind.recognizes?(four_of_a_kind)).to be_truthy
-      end
-
-      it 'not four of a kind' do
-        expect(FourOfAKind.recognizes?(one_pair)).to be_falsey
-      end
-    end
-  end
-
-  describe FullHouse do
-    describe '#recognizes' do
-      it 'full house' do
-        expect(FullHouse.recognizes?(full_house)).to be_truthy
-      end
-
-      it 'not full house' do
-        expect(FullHouse.recognizes?(two_pair)).to be_falsey
-      end
-    end
-  end
-
-  describe Flush do
-    describe '#recognizes' do
-      it 'flush' do
-        expect(Flush.recognizes?(flush)).to be_truthy
-      end
-
-      it 'not flush' do
-        expect(Flush.recognizes?(three_of_a_kind)).to be_falsey
-      end
-    end
-  end
-
-  describe Straight do
-    describe '#recognizes' do
-      it 'straight' do
-        expect(Straight.recognizes?(straight)).to be_truthy
-      end
-
-      it 'not straight' do
-        expect(Straight.recognizes?(high_card)).to be_falsey
-      end
-    end
-  end
-
-  describe ThreeOfAKind do
-    describe '#recognizes' do
-      it 'three of a kind' do
-        expect(ThreeOfAKind.recognizes?(three_of_a_kind)).to be_truthy
-      end
-
-      it 'not three of a kind' do
-        expect(ThreeOfAKind.recognizes?(flush)).to be_falsey
-      end
-    end
-  end
-
-  describe TwoPair do
-    describe '#recognizes' do
-      it 'two pair' do
-        expect(TwoPair.recognizes?(two_pair)).to be_truthy
-      end
-
-      it 'not two pair' do
-        expect(TwoPair.recognizes?(straight_flush)).to be_falsey
-      end
-    end
-  end
-
-  describe OnePair do
-    describe '#recognizes' do
-      it 'one pair' do
-        expect(OnePair.recognizes?(one_pair)).to be_truthy
-      end
-
-      it 'not one pair' do
-        expect(OnePair.recognizes?(full_house)).to be_falsey
-      end
-    end
-  end
-
-  describe HighCard do
-    describe '#recognizes' do
-      it 'high card' do
-        expect(HighCard.recognizes?(high_card)).to be_truthy
-      end
-
-      it 'not high card' do
-        expect(HighCard.recognizes?(straight)).to be_falsey
-      end
-    end
-  end
+  #
+  # describe 'four_of_a_kind' do
+  #   it 'four of a kind' do
+  #     expect(four_of_a_kind?(four_of_a_kind)).to be_truthy
+  #   end
+  #
+  #   it 'not four of a kind' do
+  #     expect(four_of_a_kind?(one_pair)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'full_house' do
+  #   it 'full house' do
+  #     expect(full_house?(full_house)).to be_truthy
+  #   end
+  #
+  #   it 'not full house' do
+  #     expect(full_house?(two_pair)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'flush' do
+  #   it 'flush' do
+  #     expect(flush?(flush)).to be_truthy
+  #   end
+  #
+  #   it 'not flush' do
+  #     expect(flush?(three_of_a_kind)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'straight' do
+  #   it 'straight' do
+  #     expect(straight?(straight)).to be_truthy
+  #   end
+  #
+  #   it 'not straight' do
+  #     expect(straight?(high_card)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'three_of_a_kind' do
+  #   it 'three of a kind' do
+  #     expect(three_of_a_kind?(three_of_a_kind)).to be_truthy
+  #   end
+  #
+  #   it 'not three of a kind' do
+  #     expect(three_of_a_kind?(flush)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'two_pair' do
+  #   it 'two pair' do
+  #     expect(two_pair?(two_pair)).to be_truthy
+  #   end
+  #
+  #   it 'not two pair' do
+  #     expect(two_pair?(straight_flush)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'one_pair' do
+  #   it 'one pair' do
+  #     expect(one_pair?(one_pair)).to be_truthy
+  #   end
+  #
+  #   it 'not one pair' do
+  #     expect(one_pair?(full_house)).to be_falsey
+  #   end
+  # end
+  #
+  # describe 'high_card' do
+  #   it 'high card' do
+  #     expect(high_card?(high_card)).to be_truthy
+  #   end
+  #
+  #   it 'not high card' do
+  #     expect(high_card?(straight)).to be_falsey
+  #   end
+  # end
 end

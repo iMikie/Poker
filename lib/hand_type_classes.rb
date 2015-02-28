@@ -1,75 +1,81 @@
-class StraightFlush
-  def self.recognizes?(hand)
-    sample_suit = hand.cards[0].suit
-    return false unless hand.cards.all? { |card| card.suit == sample_suit }
+require 'byebug'
 
-    ace_high_sorted = compare_sorted(hand, :ace_high)
-    ace_low_sorted = compare_sorted(hand, :ace_low)
+module HandTypes
+  def value_count
+    value_count = {}
 
-    ace_high_sorted || ace_low_sorted
+    @cards.each do |card|
+      value = card.value
+      value_count[value] = (value_count[value] ? value_count[value] + 1 : 1)
+    end
+
+    value_count
   end
 
-  def self.compare_sorted(hand, ace_value)
-    sorted = hand.values(ace_value).sort
+  def suit_count
+    suit_count = {}
+
+    @cards.each do |card|
+      suit = card.suit
+      suit_count[suit] = (suit_count[suit] ? suit_count[suit] + 1 : 1)
+    end
+
+    suit_count
+  end
+
+  def compare_sorted(ace_value)
+    sorted = values(ace_value).sort
     (sorted.length - 1).times do |i|
       return false unless sorted[i] + 1 == sorted[i + 1]
     end
 
     true
   end
-end
 
-class FourOfAKind
-  def self.recognizes?(hand)
-    sample_values = [hand.cards[0].value, hand.cards[1].value]
+  def is_straight?
+    ace_high_sorted = compare_sorted(:ace_high)
+    ace_low_sorted = compare_sorted(:ace_low)
 
-    sample_values.any? do |value|
-      hand.cards.select do |card|
-        card.value == value
-      end.length == 4
-    end
+    ace_high_sorted || ace_low_sorted
   end
 
-end
-
-class FullHouse
-  def self.recognizes?(hand)
-
+  def straight_flush?
+    return false unless suit_count.values == [5]
+    is_straight?
   end
-end
 
-class Flush
-  def self.recognizes?(hand)
-
+  def four_of_a_kind?
+    value_count.values.sort == [1, 4]
   end
-end
 
-class Straight
-  def self.recognizes?(hand)
-
+  def full_house?
+    value_count.values.sort == [2, 3]
   end
-end
 
-class ThreeOfAKind
-  def self.recognizes?(hand)
-
+  def flush?
+    return false if is_straight?
+    suit_count.values == [5]
   end
-end
 
-class TwoPair
-  def self.recognizes?(hand)
-
+  def straight?
+    return false if suit_count.values == [5]
+    is_straight?
   end
-end
 
-class OnePair
-  def self.recognizes?(hand)
-
+  def three_of_a_kind?
+    value_count.values.sort == [1, 1, 3]
   end
-end
 
-class HighCard
-  def self.recognizes?(hand)
+  def two_pair?
+    value_count.values.sort == [1, 2, 2]
+  end
 
+  def one_pair?
+    value_count.values.sort == [1, 1, 1, 2]
+  end
+
+  def high_card?
+    return false unless value_count.values.sort == [1, 1, 1, 1, 1]
+    suit_count.values != [5]
   end
 end
